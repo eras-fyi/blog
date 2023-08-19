@@ -1,0 +1,65 @@
+---
+title: 'WWBTW 1: Improving plan quality and usefulness to our users'
+date: '2023-07-24'
+tags: ['eras app', 'personal finance', 'habits']
+authors: ['edmond']
+draft: false
+summary: Discover how we're innovating AI-driven personal finance tools, focusing on reliable action plans and leveraging OpenAI for better outcomes
+---
+
+Welcome to the first edition of What We Built This Week! I love to play around with common acronyms like BTW, ASAP, and FYI - as you might know from our website! However, I <em>really</em> love acronyms that add syllables to the text that it is short for, and WWBTW does that particularly well.
+
+WWBTW is our opportunity to share what we believe was the most exciting highlight of the week. As we build out eras, we want to transparently document the problems we face in our journey and how we're seeking to overcome them. It's our aim to do so regularly, which hopefully brings in more like-minded folks supportive of our journey.
+
+Let's dive in!
+
+## Introducing our core service: action plans
+
+When we first decided to use AI in our personal finance tool, we assumed that the sky's the limit! We imagined that users will ask us personal finance questions, make plans to guide them on their financial journey, and work with us to execute on those plans. We imagined that a single prompt would handle multiple use cases:
+
+- Interact with users to identify, from their message, parts of their background that are relevant to their request
+- Decide what type of service they were looking for (e.g. make plans, learn about financial concepts, do research, etc.)
+- Iterate on each type of service until it became satisfactory to a user
+
+This was a big ask. Sensibly, we narrowed down our approach to focus on making “action plans” - clear steps an individual can follow, at their own pace, to better their financial lives. We wanted to show links to financial education content stored in our database that are relevant to their needs, serving as a pointer to publicly available personal finance resources.
+
+![Explosion](/static/images/explosion.png)
+
+We believed that with the right prompt, it'd be "simple" to create plans for people that just worked. Combine our prompt with our user's message and voila - a life-changing action plan that worked wonders for everyone!
+
+### Improving action plan quality and reliability
+
+If only.
+
+We soon discovered that controlling AI was the real challenge (please let this not be a precursor to some [AGI nightmare](https://en.wikipedia.org/wiki/Existential_risk_from_artificial_general_intelligence)). Our current [build-measure-learn cycle](https://theleanstartup.com/principles) focuses on figuring out what a "good enough" action plan is. We’re testing if users will make a plan and click on the links that we share through the plan.
+
+However, embedding links is harder than it looks. We'd often get back malformed, unpredictable, or hallucinated links, which will damage our credibility if we don't get on top of it.
+
+One feature of prompt engineering is that bug fixing is significantly harder because the specific cause is unknown. You may make changes to one part of the prompt and end up with a response that doesn't obey your instructions elsewhere - a [well](https://github.com/brexhq/prompt-engineering#jailbreaks)-[documented](https://medium.com/@SamiRamly/prompt-attacks-are-llm-jailbreaks-inevitable-f7848cc11122) [issue](https://www.jailbreakchat.com/) with AI.
+
+### OpenAI to the rescue
+
+Thankfully, OpenAI recently added the [function call](https://openai.com/blog/function-calling-and-other-api-updates) ability. This made it easier to receive our response in a [JSON format](https://en.wikipedia.org/wiki/JSON), so we could specify a prompt for each part of the response. Smaller prompts tend to lead to better, more controllable outputs, and this has led to a more reliable plan for users.
+
+Our current structure looks like this:
+
+```json
+{
+	"text": "A summary of the changes made to the user's plan",
+	"plan": {
+		"goal": "What the user wants to achieve",
+		"steps": [
+			...steps-for-the-user-to-take
+		]
+	},
+	"links": [
+		...links-used-in-this-answer
+	]
+}
+```
+
+With this change, we can add links to content from our database directly and in a more fine-grained way, minimising the chance of hallucinated/false links.
+
+As we add more content to our database, this will both improve the quality of the output we generate and add more diverse and meaningful links for our users. Getting people to trust an AI financial guide is hard work, but we believe that small and steady progress will get us to that goal.
+
+We hope you enjoyed the first edition of WWBTW, and as always, we can't wait to see how our plans help you achieve your financial goals!

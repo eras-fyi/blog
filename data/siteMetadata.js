@@ -27,6 +27,7 @@ const siteMetadata = {
     // },
     plausibleAnalytics: {
       plausibleDataDomain: process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN, // e.g. tailwind-nextjs-starter-blog.vercel.app
+      dataApi: 'https://plausible.io/js/script.js',
     },
     // simpleAnalytics: {},
     // posthogAnalytics: {

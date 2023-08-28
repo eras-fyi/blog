@@ -3,7 +3,7 @@ const siteMetadata = {
   title: 'eras blog',
   author: 'eras',
   headerTitle: 'eras blog',
-  description: 'Our blog on the journey to mass financial success',
+  description: 'Our blog on the journey to mass personal success',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://blog.eras.fyi',
